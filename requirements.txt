@@ -1,3 +1,6 @@
-torch
-zetascale
-swarms
+dataclasses
+pyyaml
+openpyxl
+loguru
+pydantic
+PyPDF2
