@@ -13,4 +13,6 @@ __all__ = [
     "pydantic_type_to_yaml_schema",
     "YamlOutputParser",
     "JsonOutputParser",
+    "file_to_string",
+    "chunk_text_dynamic",
 ]
