@@ -4,7 +4,6 @@ from typing import (
     Type,
     Any,
     get_type_hints,
-    Optional,
     Union,
     List,
     Dict,
