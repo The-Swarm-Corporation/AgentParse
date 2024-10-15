@@ -2,7 +2,7 @@ import os
 from PyPDF2 import PdfReader
 import openpyxl
 from loguru import logger
-from swarms.models.tiktoken_wrapper import TikTokenizer
+from swarm_models.tiktoken_wrapper import TikTokenizer
 from typing import List
 
 

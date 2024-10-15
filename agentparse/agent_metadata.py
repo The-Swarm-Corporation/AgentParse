@@ -1,11 +1,11 @@
 import subprocess
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Callable
 
 from loguru import logger
 from pydantic import BaseModel
 
-from swarms.structs.agent import Agent
-
+# Setting up loguru logging
+logger.add("agent_metadata.log", rotation="10 MB")
 
 try:
     import pandas as pd
@@ -15,16 +15,17 @@ except ImportError:
     import pandas as pd
 
 
-def display_agents_info(agents: List[Agent]) -> None:
+def display_agents_info(agents: List[Callable]) -> pd.DataFrame:
     """
     Displays information about all agents in a list using a DataFrame.
 
-    :param agents: List of Agent instances.
+    :param agents: List of callable functions that return Agent instances.
     """
     # Extracting relevant information from each agent
     agent_data = []
-    for agent in agents:
+    for agent_callable in agents:
         try:
+            agent = agent_callable()
             agent_info = {
                 "ID": agent.id,
                 "Name": agent.agent_name,
@@ -37,7 +38,7 @@ def display_agents_info(agents: List[Agent]) -> None:
             agent_data.append(agent_info)
         except AttributeError as e:
             logger.error(
-                f"Failed to extract information from agent {agent}: {e}"
+                f"Failed to extract information from agent: {e}"
             )
             continue
 
@@ -51,6 +52,8 @@ def display_agents_info(agents: List[Agent]) -> None:
     # Displaying the DataFrame
     try:
         print(df)
+
+        return df
     except Exception as e:
         logger.error(f"Failed to print DataFrame: {e}")
 
